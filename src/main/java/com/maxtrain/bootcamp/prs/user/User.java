@@ -25,6 +25,7 @@ public class User {
 	private boolean reviewer;
 	private boolean admin;
 	
+	public User() {}
 	
 	public int getId() {
 		return id;
