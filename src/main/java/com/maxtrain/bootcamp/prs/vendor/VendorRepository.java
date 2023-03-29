@@ -1,5 +1,7 @@
 package com.maxtrain.bootcamp.prs.vendor;
 
-public interface VendorRepository {
+import org.springframework.data.repository.CrudRepository;
+
+public interface VendorRepository extends CrudRepository <Vendor, Integer> {
 
 }
