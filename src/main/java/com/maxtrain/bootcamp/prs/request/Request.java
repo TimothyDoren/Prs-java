@@ -1,5 +1,6 @@
 package com.maxtrain.bootcamp.prs.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.maxtrain.bootcamp.prs.user.User;
 
 import jakarta.persistence.*;
@@ -7,6 +8,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="Requests")
+@JsonIgnoreProperties({"requestlines"})
 public class Request {
 
 	@Id
@@ -20,7 +22,7 @@ public class Request {
 	private String rejectionReason;
 	@Column(length=20, nullable=false, columnDefinition="VARCHAR(20) DEFAULT 'Pickup'")
 	private String deliveryMode;
-	@Column(length=10, nullable=false)
+	@Column(length=10, nullable=false, columnDefinition="VARCHAR(10) DEFAULT 'NEW'")
 	private String status;
 	@Column(columnDefinition="decimal(11,2) NOT NULL DEFAULT 0")
 	private double total;
