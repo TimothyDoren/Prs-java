@@ -1,6 +1,5 @@
 package com.maxtrain.bootcamp.prs.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.maxtrain.bootcamp.prs.vendor.Vendor;
 
 import jakarta.persistence.*;
@@ -8,7 +7,6 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="Products", uniqueConstraints=@UniqueConstraint(name="UIDX_Code", columnNames= {"partNbr"}))
-@JsonIgnoreProperties({"requestlines"})
 public class Product {
 	
 	@Id

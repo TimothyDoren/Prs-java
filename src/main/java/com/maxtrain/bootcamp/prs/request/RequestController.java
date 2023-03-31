@@ -73,7 +73,7 @@ public class RequestController {
 		@PostMapping
 		public ResponseEntity<Request> postRequest(@RequestBody Request request){
 			Request savedRequest = requestRepo.save(request);
-			return new ResponseEntity<Request>(savedRequest, HttpStatus.OK);
+			return new ResponseEntity<Request>(savedRequest, HttpStatus.CREATED);
 		}
 		@SuppressWarnings("rawtypes")
 		@PutMapping("{id}")

@@ -40,14 +40,14 @@ public class RequestlineController {
 			return false;
 		}
 		Request request = aRequest.get();
-		Iterable<Requestline> requestlines = reqLineRepo.findByRequestId(requestId);
+		Iterable<Requestline> requestlines = reqLineRepo.findByRequestId(aRequest.get().getId());
 		double total = 0;
 		for(Requestline rl : requestlines) {
 			if(rl.getProduct().getName() == null) {
 				Product product = prodRepo.findById(rl.getProduct().getId()).get();
 				rl.setProduct(product);
 			}
-			total += rl.getProduct().getPrice() * rl.getQuantity();
+			total +=  rl.getQuantity() * rl.getProduct().getPrice();
 		}
 		request.setTotal(total);
 		reqRepo.save(request);
@@ -64,7 +64,7 @@ public class RequestlineController {
 	public ResponseEntity<Requestline> getOrderline(@PathVariable int id){
 		Optional<Requestline> requestline = reqLineRepo.findById(id);
 		if(requestline.isEmpty()) {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Requestline>(requestline.get(), HttpStatus.OK);
 	}
@@ -82,9 +82,9 @@ public class RequestlineController {
 	}
 	@SuppressWarnings("rawtypes")
 	@PutMapping("{id}")
-	public ResponseEntity<Requestline> putRequestline(@PathVariable int id, @RequestBody Requestline requestline){
+	public ResponseEntity putRequestline(@PathVariable int id, @RequestBody Requestline requestline){
 		if(requestline.getId() != id) {
-			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		reqLineRepo.save(requestline);
 		Optional<Request> request = reqRepo.findById(requestline.getRequest().getId());
@@ -94,11 +94,11 @@ public class RequestlineController {
 				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
-		return new ResponseEntity(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	@SuppressWarnings("rawtypes")
 	@DeleteMapping("{id}")
-	public ResponseEntity<Requestline> deleteRequestline(@PathVariable int id){
+	public ResponseEntity deleteRequestline(@PathVariable int id){
 		Optional<Requestline> requestline = reqLineRepo.findById(id);
 		if(requestline.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);

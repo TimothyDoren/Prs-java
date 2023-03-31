@@ -1,6 +1,11 @@
 package com.maxtrain.bootcamp.prs.request;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.maxtrain.bootcamp.prs.requestline.Requestline;
 import com.maxtrain.bootcamp.prs.user.User;
 
 import jakarta.persistence.*;
@@ -8,7 +13,6 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="Requests")
-@JsonIgnoreProperties({"requestlines"})
 public class Request {
 
 	@Id
@@ -30,6 +34,17 @@ public class Request {
 	@ManyToOne(optional=false)
 	@JoinColumn(name="userId", columnDefinition="int")
 	private User user;
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy="request")
+	private List<Requestline> requestlines;
+	
+	public List<Requestline> getRequestlines(){
+		return requestlines;
+	}
+	public void setRequestlines(List<Requestline> requestlines) {
+		this.requestlines = requestlines;
+	}
 
 	public int getId() {
 		return id;

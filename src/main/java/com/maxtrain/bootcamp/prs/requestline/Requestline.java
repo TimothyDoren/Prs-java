@@ -1,6 +1,7 @@
 package com.maxtrain.bootcamp.prs.requestline;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.maxtrain.bootcamp.prs.product.Product;
@@ -19,15 +20,16 @@ public class Requestline {
 	@Column(columnDefinition="int not null default 1")
 	private int quantity;
 	
+	@JsonBackReference
 	@ManyToOne(optional=false)
-	@JoinColumn(name="requestId", referencedColumnName="id")
-	@JsonProperty("requestId")
+	@JoinColumn(name="requestId", columnDefinition="int")
 	private Request request;
 	
 	@ManyToOne(optional=false)
-	@JoinColumn(name="productId", referencedColumnName="id")
-	@JsonProperty("productId")
+	@JoinColumn(name="productId", columnDefinition="int")
 	private Product product;
+	
+	public Requestline() {}
 
 	public int getId() {
 		return id;
@@ -44,7 +46,7 @@ public class Requestline {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	@JsonIgnore
+	
 	public Request getRequest() {
 		return request;
 	}
@@ -52,7 +54,6 @@ public class Requestline {
 	public void setRequest(Request request) {
 		this.request = request;
 	}
-	@JsonIgnore
 	public Product getProduct() {
 		return product;
 	}

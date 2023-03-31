@@ -40,7 +40,7 @@ public class ProductController {
 	@PostMapping
 	public ResponseEntity<Product> postProduct(@RequestBody Product product){
 		Product savedProduct = productRepo.save(product);
-		return new ResponseEntity<Product>(savedProduct, HttpStatus.OK);
+		return new ResponseEntity<Product>(savedProduct, HttpStatus.CREATED);
 	}
 	@SuppressWarnings("rawtypes")
 	@PutMapping("{id}")
